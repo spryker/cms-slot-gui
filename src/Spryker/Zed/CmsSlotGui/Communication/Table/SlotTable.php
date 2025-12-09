@@ -314,7 +314,7 @@ class SlotTable extends AbstractTable
     protected function getStatus(array $slot): string
     {
         if ($slot[SpyCmsSlotTableMap::COL_IS_ACTIVE]) {
-            return $this->generateLabel('Active', 'label-info');
+            return $this->generateLabel('Active', 'label-primary');
         }
 
         return $this->generateLabel('Inactive', 'label-danger');
