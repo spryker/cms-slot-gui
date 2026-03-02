@@ -22,21 +22,11 @@ class CmsSlotGuiToCmsSlotFacadeBridge implements CmsSlotGuiToCmsSlotFacadeInterf
         $this->cmsSlotFacade = $cmsSlotFacade;
     }
 
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return void
-     */
     public function activateByIdCmsSlot(int $idCmsSlot): void
     {
         $this->cmsSlotFacade->activateByIdCmsSlot($idCmsSlot);
     }
 
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return void
-     */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void
     {
         $this->cmsSlotFacade->deactivateByIdCmsSlot($idCmsSlot);

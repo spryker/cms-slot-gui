@@ -30,12 +30,6 @@ class CmsSlotGuiCommunicationTester extends Actor
 {
     use _generated\CmsSlotGuiCommunicationTesterActions;
 
-    /**
-     * @param int $idCmsSlot
-     * @param int $idCmsSlotTemplate
-     *
-     * @return void
-     */
     public function haveCmsSlotCmsToSlotTemplateConnection(int $idCmsSlot, int $idCmsSlotTemplate): void
     {
         $cmsSlotToCmsSlotTemplateEntity = SpyCmsSlotToCmsSlotTemplateQuery::create()
@@ -52,11 +46,6 @@ class CmsSlotGuiCommunicationTester extends Actor
         });
     }
 
-    /**
-     * @param int $idCmsSlotToCmsSlotTemplate
-     *
-     * @return void
-     */
     protected function deleteCmsSlotToCmsSlotTemplateConnection(int $idCmsSlotToCmsSlotTemplate): void
     {
         SpyCmsSlotToCmsSlotTemplateQuery::create()

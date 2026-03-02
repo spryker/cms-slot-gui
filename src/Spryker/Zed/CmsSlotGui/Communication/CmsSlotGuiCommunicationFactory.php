@@ -20,9 +20,6 @@ use Symfony\Component\Form\FormInterface;
 
 class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
 {
-    /**
-     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\TemplateTable
-     */
     public function createTemplateListTable(): TemplateTable
     {
         return new TemplateTable(
@@ -30,11 +27,6 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @param int|null $idSlotTemplate
-     *
-     * @return \Spryker\Zed\CmsSlotGui\Communication\Table\SlotTable
-     */
     public function createSlotListTable(?int $idSlotTemplate = null): SlotTable
     {
         return new SlotTable(
@@ -44,41 +36,26 @@ class CmsSlotGuiCommunicationFactory extends AbstractCommunicationFactory
         );
     }
 
-    /**
-     * @return \Symfony\Component\Form\FormInterface
-     */
     public function createToggleActiveCmsSlotForm(): FormInterface
     {
         return $this->getFormFactory()->create(ToggleActiveCmsSlotForm::class);
     }
 
-    /**
-     * @return \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToCmsSlotFacadeInterface
-     */
     public function getCmsSlotFacade(): CmsSlotGuiToCmsSlotFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotGuiDependencyProvider::FACADE_CMS_SLOT);
     }
 
-    /**
-     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery
-     */
     public function getCmsSlotTemplateQuery(): SpyCmsSlotTemplateQuery
     {
         return $this->getProvidedDependency(CmsSlotGuiDependencyProvider::PROPER_QUERY_CMS_SLOT_TEMPLATE);
     }
 
-    /**
-     * @return \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery
-     */
     public function getCmsSlotQuery(): SpyCmsSlotQuery
     {
         return $this->getProvidedDependency(CmsSlotGuiDependencyProvider::PROPER_QUERY_CMS_SLOT);
     }
 
-    /**
-     * @return \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface
-     */
     public function getTranslatorFacade(): CmsSlotGuiToTranslatorFacadeInterface
     {
         return $this->getProvidedDependency(CmsSlotGuiDependencyProvider::FACADE_TRANSLATOR);

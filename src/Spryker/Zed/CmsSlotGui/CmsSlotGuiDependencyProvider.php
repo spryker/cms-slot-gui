@@ -36,11 +36,6 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
      */
     public const FACADE_TRANSLATOR = 'FACADE_TRANSLATOR';
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     public function provideCommunicationLayerDependencies(Container $container): Container
     {
         $container = parent::provideCommunicationLayerDependencies($container);
@@ -52,11 +47,6 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCmsSlotTemplateQuery(Container $container): Container
     {
         $container->set(static::PROPER_QUERY_CMS_SLOT_TEMPLATE, $container->factory(function () {
@@ -66,11 +56,6 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCmsSlotQuery(Container $container): Container
     {
         $container->set(static::PROPER_QUERY_CMS_SLOT, $container->factory(function () {
@@ -80,11 +65,6 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addCmsSlotFacade(Container $container): Container
     {
         $container->set(static::FACADE_CMS_SLOT, function (Container $container) {
@@ -94,11 +74,6 @@ class CmsSlotGuiDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addTranslatorFacade(Container $container): Container
     {
         $container->set(static::FACADE_TRANSLATOR, function (Container $container) {

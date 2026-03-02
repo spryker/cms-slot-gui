@@ -31,9 +31,6 @@ class TemplateTableQueryTest extends Unit
      */
     protected $tester;
 
-    /**
-     * @return void
-     */
     public function testFetchDataCollectsCorrectCmsSlotTemplates(): void
     {
         // Arrange

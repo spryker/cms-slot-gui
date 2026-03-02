@@ -56,19 +56,11 @@ class TemplateTable extends AbstractTable
      */
     protected $cmsSlotTemplateQuery;
 
-    /**
-     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery $cmsSlotTemplateQuery
-     */
     public function __construct(SpyCmsSlotTemplateQuery $cmsSlotTemplateQuery)
     {
         $this->cmsSlotTemplateQuery = $cmsSlotTemplateQuery;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function configure(TableConfiguration $config): TableConfiguration
     {
         $this->setTableIdentifier(static::TABLE_IDENTIFIER);
@@ -91,11 +83,6 @@ class TemplateTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
@@ -110,11 +97,6 @@ class TemplateTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return array
-     */
     protected function prepareData(TableConfiguration $config): array
     {
         $this->filterTemplatesWithoutSlots();
@@ -135,9 +117,6 @@ class TemplateTable extends AbstractTable
         return $results;
     }
 
-    /**
-     * @return void
-     */
     protected function filterTemplatesWithoutSlots(): void
     {
         $this->cmsSlotTemplateQuery
@@ -145,9 +124,6 @@ class TemplateTable extends AbstractTable
             ->groupByIdCmsSlotTemplate();
     }
 
-    /**
-     * @return void
-     */
     protected function addSlotsNumber(): void
     {
         $this->cmsSlotTemplateQuery

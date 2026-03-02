@@ -21,11 +21,6 @@ class SlotListController extends AbstractController
      */
     public const PARAM_ID_CMS_SLOT_TEMPLATE = 'id-cms-slot-template';
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
-     */
     public function tableAction(Request $request): JsonResponse
     {
         $idCmsSlotTemplate = $this->castId($request->get(static::PARAM_ID_CMS_SLOT_TEMPLATE));

@@ -103,11 +103,6 @@ class SlotTable extends AbstractTable
      */
     protected $idCmsSlotTemplate;
 
-    /**
-     * @param \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotQuery $cmsSlotQuery
-     * @param \Spryker\Zed\CmsSlotGui\Dependency\Facade\CmsSlotGuiToTranslatorFacadeInterface $translatorFacade
-     * @param int|null $idCmsSlotTemplate
-     */
     public function __construct(
         SpyCmsSlotQuery $cmsSlotQuery,
         CmsSlotGuiToTranslatorFacadeInterface $translatorFacade,
@@ -140,11 +135,6 @@ class SlotTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setHeader(TableConfiguration $config): TableConfiguration
     {
         $header = [
@@ -165,11 +155,6 @@ class SlotTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setSortable(TableConfiguration $config): TableConfiguration
     {
         $sortable = [
@@ -187,11 +172,6 @@ class SlotTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return \Spryker\Zed\Gui\Communication\Table\TableConfiguration
-     */
     protected function setSearchable(TableConfiguration $config): TableConfiguration
     {
         $searchable = [
@@ -209,9 +189,6 @@ class SlotTable extends AbstractTable
         return $config;
     }
 
-    /**
-     * @return bool
-     */
     protected function isContentProviderColumnVisible(): bool
     {
         if ($this->contentProviderTypesNumber === null) {
@@ -224,11 +201,6 @@ class SlotTable extends AbstractTable
         return $this->contentProviderTypesNumber > 1;
     }
 
-    /**
-     * @param \Spryker\Zed\Gui\Communication\Table\TableConfiguration $config
-     *
-     * @return array
-     */
     protected function prepareData(TableConfiguration $config): array
     {
         if (!$this->idCmsSlotTemplate) {
@@ -262,11 +234,6 @@ class SlotTable extends AbstractTable
         return $results;
     }
 
-    /**
-     * @param array $slot
-     *
-     * @return string
-     */
     protected function getName(array $slot): string
     {
         return sprintf(
@@ -276,11 +243,6 @@ class SlotTable extends AbstractTable
         );
     }
 
-    /**
-     * @param array $slot
-     *
-     * @return string
-     */
     protected function buildLinks(array $slot): string
     {
         $statusToggleButton = $this->generateFormButton(
@@ -306,11 +268,6 @@ class SlotTable extends AbstractTable
         return implode(' ', $buttons);
     }
 
-    /**
-     * @param array $slot
-     *
-     * @return string
-     */
     protected function getStatus(array $slot): string
     {
         if ($slot[SpyCmsSlotTableMap::COL_IS_ACTIVE]) {
@@ -320,31 +277,16 @@ class SlotTable extends AbstractTable
         return $this->generateLabel('Inactive', 'label-danger');
     }
 
-    /**
-     * @param array $slot
-     *
-     * @return string
-     */
     protected function getContentProvider(array $slot): string
     {
         return $this->translatorFacade->trans($slot[SpyCmsSlotTableMap::COL_CONTENT_PROVIDER_TYPE]);
     }
 
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return string
-     */
     protected function getUrlActivate(int $idCmsSlot): string
     {
         return Url::generate(static::URL_ACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();
     }
 
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return string
-     */
     protected function getUrlDeactivate(int $idCmsSlot): string
     {
         return Url::generate(static::URL_DEACTIVATE_BUTTON, [ActivateSlotController::PARAM_ID_CMS_SLOT => $idCmsSlot])->build();

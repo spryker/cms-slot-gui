@@ -9,17 +9,7 @@ namespace Spryker\Zed\CmsSlotGui\Dependency\Facade;
 
 interface CmsSlotGuiToCmsSlotFacadeInterface
 {
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return void
-     */
     public function activateByIdCmsSlot(int $idCmsSlot): void;
 
-    /**
-     * @param int $idCmsSlot
-     *
-     * @return void
-     */
     public function deactivateByIdCmsSlot(int $idCmsSlot): void;
 }
