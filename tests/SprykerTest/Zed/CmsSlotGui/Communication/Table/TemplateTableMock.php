@@ -30,4 +30,12 @@ class TemplateTableMock extends TemplateTable
     {
         return $this->init()->prepareData($this->config);
     }
+
+    /**
+     * @return array<string, mixed>
+     */
+    public function getPreparedConfig(): array
+    {
+        return $this->init()->prepareConfig();
+    }
 }

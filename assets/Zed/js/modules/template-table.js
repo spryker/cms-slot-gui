@@ -5,6 +5,12 @@
 
 'use strict';
 
+/**
+ * @deprecated Will be removed in the next major version. The behaviour this file implements is now
+ * provided by the Gui table library and configured from PHP through the `data-master-detail` table attribute (see \Spryker\Zed\CmsSlotGui\Communication\Table\TemplateTable).
+ * Kept only so that projects still requiring this file keep working.
+ */
+
 var TemplateTable = function (options) {
     var _self = this;
     this.templateTableId = '';

@@ -23,6 +23,13 @@ class SlotTable extends AbstractTable
      */
     public const TABLE_CLASS = 'js-cms-slot-list-table';
 
+    public const string TABLE_IDENTIFIER = 'slot-list-table';
+
+    /**
+     * @uses \Spryker\Zed\CmsSlotGui\Communication\Controller\SlotListController::tableAction()
+     */
+    protected const string BASE_URL = '/cms-slot-gui/slot-list/';
+
     protected const COL_ID_CMS_SLOT = SpyCmsSlotTableMap::COL_ID_CMS_SLOT;
 
     protected const COL_NAME = SpyCmsSlotTableMap::COL_NAME;
@@ -120,7 +127,11 @@ class SlotTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $this->tableClass = static::TABLE_CLASS;
+        $this->setTableIdentifier(static::TABLE_IDENTIFIER);
+        $this->tableClass .= ' ' . static::TABLE_CLASS;
+        // The table is rendered by the template list page, so the ajax URL has to be set explicitly
+        // instead of being derived from the module and controller of the current request.
+        $this->baseUrl = static::BASE_URL;
 
         $config = $this->setHeader($config);
         $config = $this->setSortable($config);
@@ -131,6 +142,12 @@ class SlotTable extends AbstractTable
         $config->addRawColumn(static::COL_ACTIONS);
         $config->addRawColumn(static::COL_STATUS);
         $config->addRawColumn(static::COL_NAME);
+
+        // The table is loaded by the master-detail feature of the template table as soon as a template is
+        // selected, so the initial request would always run without a template ID and return no rows.
+        $config->setTableAttributes([
+            'data-defer-loading' => 0,
+        ]);
 
         return $config;
     }

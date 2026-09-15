@@ -10,6 +10,7 @@ namespace Spryker\Zed\CmsSlotGui\Communication\Table;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotTemplateTableMap;
 use Orm\Zed\CmsSlot\Persistence\Map\SpyCmsSlotToCmsSlotTemplateTableMap;
 use Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery;
+use Spryker\Zed\CmsSlotGui\Communication\Controller\SlotListController;
 use Spryker\Zed\Gui\Communication\Table\AbstractTable;
 use Spryker\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -51,6 +52,8 @@ class TemplateTable extends AbstractTable
      */
     protected const TABLE_IDENTIFIER = 'template-list-table';
 
+    protected const string SELECTOR_SLOT_TEMPLATE_NAME = '.js-slot-template-name';
+
     /**
      * @var \Orm\Zed\CmsSlot\Persistence\SpyCmsSlotTemplateQuery
      */
@@ -78,6 +81,17 @@ class TemplateTable extends AbstractTable
             static::COL_ID,
             static::COL_NAME,
             static::COL_DESCRIPTION,
+        ]);
+
+        // Selecting a template row reloads the slot table for that template.
+        $config->setTableAttributes([
+            'data-master-detail' => [
+                'detailTableSelector' => '#' . SlotTable::TABLE_IDENTIFIER,
+                'param' => SlotListController::PARAM_ID_CMS_SLOT_TEMPLATE,
+                'colId' => static::COL_ID,
+                'colLabel' => static::COL_NAME,
+                'labelSelector' => static::SELECTOR_SLOT_TEMPLATE_NAME,
+            ],
         ]);
 
         return $config;

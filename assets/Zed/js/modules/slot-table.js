@@ -5,109 +5,102 @@
 
 'use strict';
 
-var dataTable = require('ZedGuiModules/libs/data-table');
+var masterDetailTable = require('ZedGuiModules/libs/table/master-detail-table');
+var tableAccess = require('ZedGuiModules/libs/table/table-access');
 
 var SlotTable = function (options) {
     var _self = this;
-    this.ajaxBaseUrl = '';
-    this.paramIdCmsSlotTemplate = '';
-    this.ownershipColumnId = '';
-    this.slotTableClass = '';
-    this.slotTable = {};
+    this.slotTableSelector = '';
+    this.slotTable = null;
+    this.handle = null;
     this.dataTableInit = false;
     this.dataTableInitCallback = function () {};
 
     $.extend(this, options);
 
     this.init = function () {
-        _self.slotTable = $(_self.slotTableClass);
-    };
+        _self.slotTable = $(_self.slotTableSelector);
 
-    this.loadSlotTableByIdTemplate = function (idTemplate) {
-        var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=' + idTemplate;
-
-        if (!_self.dataTableInit) {
-            _self.slotTable.data('ajax', ajaxUrl);
-
-            _self.slotTable.DataTable({
-                ajax: {
-                    cache: false,
-                },
-                autoWidth: false,
-                language: dataTable.defaultConfiguration.language,
-                drawCallback: function () {
-                    _self.activationHandler();
-                },
-            });
-
-            _self.dataTableInit = true;
-            this.dataTableInitCallback();
+        if (!_self.slotTable.length) {
             return;
         }
 
-        _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
+        _self.activationHandler();
+        document.addEventListener(masterDetailTable.MASTER_DETAIL_TABLE_SELECTED, _self.tableLoadHandler);
+
+        tableAccess.requestTable(_self.slotTable[0], function (handle) {
+            _self.handle = handle;
+        });
+    };
+
+    this.tableLoadHandler = function (event) {
+        if (_self.dataTableInit || event.detail.detailTableId !== _self.slotTable.attr('id')) {
+            return;
+        }
+
+        _self.dataTableInit = true;
+        _self.dataTableInitCallback();
     };
 
     this.activationHandler = function () {
-        _self.slotTable.find('.js-slot-activation').on('click', function (event) {
+        _self.slotTable.on('click', '.js-slot-activation', function (event) {
             event.preventDefault();
+
             var $that = $(this);
+            var $form = $that.closest('form');
 
             if ($that.data('processing') === true) {
-                return false;
+                return;
             }
 
             $that.data('processing', true);
 
             $.ajax({
-                url: $that.closest('form')[0].action,
+                url: $form[0].action,
                 type: 'POST',
-                data: $that.closest('form').serialize(),
+                data: $form.serialize(),
                 success: function (response) {
-                    if (response.success) {
-                        _self.slotTable.DataTable().ajax.reload(null, false);
+                    // The flag only guards against a second submit while this one is in flight, so it is
+                    // cleared as soon as the server has answered - waiting for the reload instead would
+                    // leave the button dead for good whenever that reload fails.
+                    $that.data('processing', false);
 
-                        return false;
+                    if (response.success) {
+                        _self.refreshSlotTable();
+
+                        return;
                     }
 
-                    $that.data('processing', false);
-                    window.sweetAlert({
-                        title: 'Error',
-                        text: response.message,
-                        html: true,
-                        type: 'error',
-                    });
+                    _self.showError(response.message);
                 },
                 error: function (response) {
                     $that.data('processing', false);
-                    window.sweetAlert({
-                        title: 'Error',
-                        text: response.status + ' ' + response.statusText,
-                        html: true,
-                        type: 'error',
-                    });
+                    _self.showError(response.status + ' ' + response.statusText);
                 },
             });
-
-            return false;
         });
     };
 
-    this.toggleTableRow = function (state) {
-        if (!state) {
-            _self.slotTable.closest('.wrapper > .row').hide();
-
-            if ($.fn.dataTable.isDataTable(_self.slotTable)) {
-                var ajaxUrl = _self.ajaxBaseUrl + '?' + _self.paramIdCmsSlotTemplate + '=0';
-                _self.slotTable.data('ajax', ajaxUrl);
-                _self.slotTable.attr('data-ajax', ajaxUrl);
-                _self.slotTable.DataTable().ajax.url(ajaxUrl).load();
-            }
-
-            return;
+    /**
+     * @returns {Promise} Resolved once the rows have been loaded again, on whichever page the table is on.
+     */
+    this.refreshSlotTable = function () {
+        if (!_self.handle) {
+            return Promise.resolve();
         }
 
-        _self.slotTable.closest('.wrapper > .row').show();
+        return _self.handle.refresh();
+    };
+
+    /**
+     * @param {string} message - Message of the server.
+     */
+    this.showError = function (message) {
+        window.sweetAlert({
+            title: 'Error',
+            text: message,
+            type: 'error',
+        });
     };
 };
 

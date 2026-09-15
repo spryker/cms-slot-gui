@@ -5,25 +5,13 @@
 
 'use strict';
 
-var TemplateTable = require('./template-table');
 var SlotTable = require('./slot-table');
 
 $(document).ready(function () {
     var slotTable = new SlotTable({
-        ajaxBaseUrl: '/cms-slot-gui/slot-list/table',
-        paramIdCmsSlotTemplate: 'id-cms-slot-template',
-        ownershipColumnId: 'spy_cms_slot.content_provider_type',
-        slotTableClass: '.js-cms-slot-list-table',
+        slotTableSelector: '.js-cms-slot-list-table',
     });
 
     slotTable.init();
     global.CmsSlotGui_SlotTable = slotTable;
-
-    var templateTable = new TemplateTable({
-        templateTableId: '#template-list-table',
-        slotTemplateNameClass: '.js-slot-template-name',
-        slotTable: slotTable,
-    });
-
-    templateTable.init();
 });
