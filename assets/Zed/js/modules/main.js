@@ -13,5 +13,5 @@ $(document).ready(function () {
     });
 
     slotTable.init();
-    global.CmsSlotGui_SlotTable = slotTable;
+    window.CmsSlotGui_SlotTable = slotTable;
 });
