@@ -291,7 +291,7 @@ class SlotTable extends AbstractTable
             return $this->generateLabel('Active', 'label-primary');
         }
 
-        return $this->generateLabel('Inactive', 'label-danger');
+        return $this->generateLabel('Inactive', 'badge-outline-dark');
     }
 
     protected function getContentProvider(array $slot): string
